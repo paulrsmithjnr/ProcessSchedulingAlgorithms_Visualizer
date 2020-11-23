@@ -1,0 +1,51 @@
+body {
+    background-image: url('../images/bg.jpg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#header .navbar {
+    background-color: transparent !important;
+}
+
+#navbar, .navbar .navbar-brand {
+    font-weight: bolder;
+}
+
+.navbar .navbar-nav {
+    margin: 0 auto;
+}
+
+.navbar .nav-item a {
+    color: white;
+}
+
+.navbar .dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.navbar .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.navbar form button {
+    border-color: white;
+    color: white;
+}
+
+#particles-js {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    
+}
+
+#mainContainer {
+    margin: auto;
+    margin-top: 3%;
+    width: 75%;
+}
+
+#jumbotronDiv {
+    padding: 10%;
+}

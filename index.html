@@ -5,41 +5,72 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" type="text/css" href="./styles/index.css">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Process Scheduling Algorithms Visualizer</title>
   </head>
   <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Process Scheduling Algorithms Visualizer</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Option 1 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Option 2</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Option 3</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-    </header>
-
-    <main>
-        <h1>
-            Process Scheduling Algorithms
-        </h1>
-    </main>
-
-    <footer></footer>
+    <div id="particles-js">
+      <div id="header">
+        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-light">
+          <a class="navbar-brand" href="#">AlgoVisualizer</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Preemptive Scheduling
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Roubd Robin</a>
+                  <a class="dropdown-item" href="#">Shortest Remaining Time</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Non-preemptive Scheduling
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">First Come, First Serve</a>
+                  <a class="dropdown-item" href="#">Shortest Job First</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </nav>
+      </div>
+  
+      <main id="particles-js">
+        <div id="mainContainer">
+          <div id="jumbotronDiv" class="jumbotron jumbotron-fluid">
+            <h1 class="display-4">Process Scheduling Algorithms</h1>
+            <p class="lead">
+              This is a interactive visualization tool that animates the different types of scheduling algorithms used by
+              a Process Scheduler in order to schedule different processes to be assigned to the CPU.
+            </p>
+            <hr class="my-4">
+            <p>These animated algorithms are either preemptive or non-preemptive.</p>
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" href="#" role="button">Start Watching</a>
+            </p>
+          </div>
+        </div>  
+      </main>
+  
+      <footer></footer>
+    </div>
+    
+    <script src="./scripts/particles.min.js"></script>
+    <script src="./scripts/app.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
