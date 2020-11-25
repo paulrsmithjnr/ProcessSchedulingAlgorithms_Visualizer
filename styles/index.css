@@ -8,6 +8,12 @@ body {
     background-color: transparent !important;
 }
 
+.navbar .navbar-brand {
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+}
+
 #navbar, .navbar .navbar-brand {
     font-weight: bolder;
 }
@@ -21,11 +27,11 @@ body {
 }
 
 .navbar .dropdown-menu {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .navbar .dropdown-item:hover {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .navbar form button {
@@ -42,10 +48,14 @@ body {
 
 #mainContainer {
     margin: auto;
-    margin-top: 3%;
+    margin-top: 1%;
     width: 75%;
 }
 
 #jumbotronDiv {
-    padding: 10%;
+    padding: 7%;
+}
+
+#avLogo {
+    height: 80px;
 }
