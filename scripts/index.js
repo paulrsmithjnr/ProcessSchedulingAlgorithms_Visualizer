@@ -1,7 +1,3 @@
-// window.onload = function() {
-//     loadHome()
-
-//     function loadHome() {
-//         document.getElementsByTagName("main")
-//     }
-// }
+$(document).ready(function() {
+    $("main").load("../home.html")
+});

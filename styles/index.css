@@ -14,7 +14,8 @@ body {
     align-items: center;
 }
 
-#navbar, .navbar .navbar-brand {
+#navbar,
+.navbar .navbar-brand {
     font-weight: bolder;
 }
 
@@ -39,16 +40,14 @@ body {
     color: white;
 }
 
-#particles-js {
-    height: 100%;
-    width: 100%;
+#particles-js {}
+
+#body {
     position: fixed;
-    
 }
 
 #mainContainer {
     margin: auto;
-    margin-top: 1%;
     width: 75%;
 }
 
