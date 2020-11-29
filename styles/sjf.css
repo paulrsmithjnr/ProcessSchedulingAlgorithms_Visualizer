@@ -1,4 +1,4 @@
-.process {
+.process-sjf {
     border: 2px black solid;
     border-radius: 100%;
     height: 50px;
@@ -14,7 +14,7 @@
     font-weight: bolder;
 }
 
-.processor {
+.processor-sjf {
     /* border: 4px black solid; */
     height: 200px;
     width: 200px;
@@ -25,7 +25,7 @@
     background-color: orange;    
 }
 
-.processor, .process {
+.processor-sjf, .process-sjf {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -33,7 +33,7 @@
     position: absolute;
 }
 
-.processor #tag, .processor #slot {
+.processor-sjf #tag, .processor-sjf #slot {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +50,7 @@
     width: 50px;
 }
 
-@keyframes moveToProcessor{
+@keyframes moveToProcessor-sjf {
 
     10% {
         left: 73%;

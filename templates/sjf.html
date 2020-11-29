@@ -1,6 +1,6 @@
 <div id="mainContainer">
     <div id="anim">
-        <div id="primaryProcessor" class="processor">
+        <div id="primaryProcessor" class="processor-sjf">
             <div id="tag">
                 PROCESSOR
             </div>
@@ -39,7 +39,7 @@
 
 
                 //adding process
-                var html = "<div id=\"p" + num + "\" class=\"process\">P" + num + "</div>";
+                var html = "<div id=\"p" + num + "\" class=\"process-sjf\">P" + num + "</div>";
                 $("#anim").append(html);
 
 
@@ -68,7 +68,7 @@
 
                 //fetching current process and adding animation
                 var process = document.getElementById("p" + num);
-                process.style.animation = "moveToProcessor " + duration + "s linear forwards";
+                process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
                 if (i==0) {
                     process.style.animationDelay = delay + "s";
                 } else {
@@ -77,7 +77,7 @@
                 }
 
                 //Animating the processor
-                var html = "<div id=\"processor" + num + "\" class=\"processor\"></div>";
+                var html = "<div id=\"processor" + num + "\" class=\"processor-sjf\"></div>";
                 $("#anim").append(html);
                 
                 var processor = document.getElementById("processor"+num);
