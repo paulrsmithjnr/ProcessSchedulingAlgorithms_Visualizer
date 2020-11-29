@@ -1,0 +1,52 @@
+<div id="mainContainer">
+    <div id="anim">
+        <div id="processor">
+            <div id="tag">
+                <b>Processor</b>
+            </div>
+            <div id="slot"></div>
+        </div>
+        <!-- <div id="p1" class="process">P1</div>
+            <div id="p2" class="process">P2</div>
+            <div id="p3" class="process">P3</div> -->
+    </div>
+
+    <script>
+        var i;
+        var num;
+
+        var topVal = 10;
+        var topDif = 15;
+        var topFinal = 0;
+
+        var duration = 1;
+
+        var delay = 2;
+        var delayDif = 4;
+        var delayFinal = 0;
+
+        for(i = 0; i < 3; i++) {
+
+            num = i + 1;
+
+
+            //adding process
+            var html = "<div id=\"p" + num + "\" class=\"process\">P" + num + "</div>";
+            $("#anim").append(html);
+
+
+            //fetching and styling process
+            var process = document.getElementById("p" + num);
+
+            //change initial top value here
+            topFinal = topVal + (topDif * i);
+            process.style.top = topFinal +"%";
+
+            process.style.animation = "moveToProcessor " + duration + "s linear forwards";
+
+            //change initial delay value here
+            delayFinal = delay + (delayDif * i);
+            process.style.animationDelay = delayFinal + "s";
+        }
+    </script>    
+</div>  
