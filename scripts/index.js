@@ -5,4 +5,9 @@ $(document).ready(function() {
         event.preventDefault();
         $("main").load("../templates/sjf.html");        
     });
+
+    $("#priority").click(function() {
+        event.preventDefault();
+        $("main").load("../templates/priority.html");        
+    });
 });

@@ -1,1 +1,60 @@
+<div id="mainContainer">
+    
+    <h3 class = "prior">Priority Scheduling</h3>
+
+    <div id="anim">
+        
+        <div id="queue">
+            <div id="tag">
+                <b>Ready Queue</b>
+                
+            </div>
+        <div id="processor">
+            <div id="tag">
+                <b>Processor</b>
+            </div>
+            <div id="slot"></div>
+            
+        </div>
+        
+        <script>
+            var i;
+            var num;
+    
+            var topVal = 10;
+            var topDif = 15;
+            var topFinal = 0;
+    
+            var duration = 5;
+    
+            var delay = 5;
+            var delayDif = 10;
+            var delayFinal = 0;
+            var burstTime = Math.floor((Math.random() * 7) + 1) //assigns a random number between 1 and 7
+    
+            for(i = 0; i < 4; i++) {
+    
+                num = i + 1;
+    
+    
+                //adding process
+                var html = "<div id=\"p" + num + "\" class=\"process\">P" + num + "</div>";
+                $("#anim").append(html);
+    
+                 
+                //fetching and styling process
+                var process = document.getElementById("p" + num);
+               
+                //change initial top value here
+                topFinal = topVal + (topDif * i);
+                process.style.top = topFinal +"%";
+                
+                process.style.animation = "moveToProcessor " + duration + "s linear forwards";
+    
+                //change initial delay value here
+                delayFinal = delay + (delayDif * i);
+                process.style.animationDelay = delayFinal + "s";
+            }
+        </script>    
+    </div>
 
