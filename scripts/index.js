@@ -6,8 +6,8 @@ $(document).ready(function() {
         $("main").load("../templates/sjf.html");        
     });
 
-    $("#srtf").click(function() {
+    $("#srt").click(function() {
         event.preventDefault();
-        $("main").load("../templates/srtf.html");        
+        $("main").load("../templates/srt.html");        
     });
 });
