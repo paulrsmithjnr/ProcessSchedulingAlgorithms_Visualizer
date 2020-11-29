@@ -1,10 +1,11 @@
 <div id="mainContainer">
     <div id="anim">
-        <div id="processor">
+        <div id="primaryProcessor" class="processor">
             <div id="tag">
-                <b>Processor</b>
+                PROCESSOR
             </div>
-            <div id="slot"></div>
+            <div id="slot">
+            </div>
         </div>
         <!-- <div id="p1" class="process">P1</div>
             <div id="p2" class="process">P2</div>
@@ -12,41 +13,82 @@
     </div>
 
     <script>
-        var i;
-        var num;
-
-        var topVal = 10;
-        var topDif = 15;
-        var topFinal = 0;
-
-        var duration = 1;
-
-        var delay = 2;
-        var delayDif = 4;
-        var delayFinal = 0;
-
-        for(i = 0; i < 3; i++) {
-
-            num = i + 1;
+        //custom sleep function
+        // const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 
-            //adding process
-            var html = "<div id=\"p" + num + "\" class=\"process\">P" + num + "</div>";
-            $("#anim").append(html);
+        loadProcesses();
+        
+        function loadProcesses() {
+            var numberOfProcesses = 5;
+
+            var duration = 6;
+
+            var delay = 2;
+            
+            var i;
+            var num;
+
+            var topVal = 10;
+            var topDif = 15;
+            var topFinal = 0;
+
+            for(i = 0; i < numberOfProcesses; i++) {
+
+                num = i + 1;
 
 
-            //fetching and styling process
-            var process = document.getElementById("p" + num);
+                //adding process
+                var html = "<div id=\"p" + num + "\" class=\"process\">P" + num + "</div>";
+                $("#anim").append(html);
 
-            //change initial top value here
-            topFinal = topVal + (topDif * i);
-            process.style.top = topFinal +"%";
 
-            process.style.animation = "moveToProcessor " + duration + "s linear forwards";
+                //fetching and styling process
+                var process = document.getElementById("p" + num);
 
-            //change initial delay value here
-            delayFinal = delay + (delayDif * i);
-            process.style.animationDelay = delayFinal + "s";
+                //adding top
+                topFinal = topVal + (topDif * i);
+                process.style.top = topFinal +"%";
+
+            }
+
+            animateProcesses(numberOfProcesses, delay, duration);
+
+        }
+
+        function animateProcesses(numberOfProcesses, delay, duration) {
+            var i;
+            var num;
+
+            var nextDelay = 0;
+            for(i = 0; i < numberOfProcesses; i++) {
+                
+                //process number
+                num = i + 1;
+
+                //fetching current process and adding animation
+                var process = document.getElementById("p" + num);
+                process.style.animation = "moveToProcessor " + duration + "s linear forwards";
+                if (i==0) {
+                    process.style.animationDelay = delay + "s";
+                } else {
+                    nextDelay = delay + duration * i;
+                    process.style.animationDelay = nextDelay + "s";
+                }
+
+                //Animating the processor
+                var html = "<div id=\"processor" + num + "\" class=\"processor\"></div>";
+                $("#anim").append(html);
+                
+                var processor = document.getElementById("processor"+num);
+
+                var processorDelay = (duration * 0.5) + (duration * i);
+                processor.style.animationDelay = processorDelay + "s";
+                
+                var count = Math.ceil(duration * 0.4);
+                processor.style.animationIterationCount = count + "";
+                processor.classList.add("animate__heartBeat");
+            }
         }
     </script>    
 </div>  

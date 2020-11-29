@@ -5,4 +5,5 @@ $(document).ready(function() {
         event.preventDefault();
         $("main").load("../templates/sjf.html");        
     });
+
 });
