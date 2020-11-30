@@ -1,9 +1,9 @@
 .prior{
     text-align: center;
     font-weight: bold;
-    font-size: 50px;
+    font-size: 30px;
     color: white;
-    animation: fadeInDown 6s;
+    animation: fadeInDown 3s;
 }
 .process {
     border: 2px black solid;

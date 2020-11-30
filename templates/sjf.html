@@ -1,4 +1,5 @@
 <div id="mainContainer">
+    <h3 class = "prior">SHORTEST JOB FIRST</h3>
     <div id="anim">
         <div id="primaryProcessor" class="processor-sjf">
             <div id="tag">
@@ -7,67 +8,102 @@
             <div id="slot">
             </div>
         </div>
-        <!-- <div id="p1" class="process">P1</div>
-            <div id="p2" class="process">P2</div>
-            <div id="p3" class="process">P3</div> -->
     </div>
 
     <script>
         //custom sleep function
         // const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
-
-        loadProcesses();
-        
-        function loadProcesses() {
+        getParameters();
+        function getParameters() {
             var numberOfProcesses = 5;
+            var i;
+
+            var processNum;
+            var randNum;
+            var processMap = new Object();
+            for (i = 0; i < numberOfProcesses; i++) {
+                processNum = i + 1;
+                randNum = Math.floor((Math.random() * 10) + 1);
+
+                processMap["P" + processNum] = randNum;
+            }
+
+            var processEntries = Object.entries(processMap);
+
+            processEntries.sort((a,b) => a[1]-b[1])
+
+            loadProcesses(numberOfProcesses, processEntries);
+        }
+        
+        
+        function loadProcesses(numberOfProcesses, processEntries) {
+            // var numberOfProcesses = 5;
 
             var duration = 6;
 
             var delay = 2;
             
-            var i;
+            var i = 0;
             var num;
 
             var topVal = 10;
             var topDif = 15;
             var topFinal = 0;
 
-            for(i = 0; i < numberOfProcesses; i++) {
-
-                num = i + 1;
-
-
+            processEntries.forEach(function (item) {
                 //adding process
-                var html = "<div id=\"p" + num + "\" class=\"process-sjf\">P" + num + "</div>";
+                var html = "<div id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + item[1] + " ms</div> </div>";
                 $("#anim").append(html);
 
-
                 //fetching and styling process
-                var process = document.getElementById("p" + num);
+                var process = document.getElementById(item[0]);
 
-                //adding top
+                // adding top
                 topFinal = topVal + (topDif * i);
                 process.style.top = topFinal +"%";
 
-            }
+                i = i + 1;
+            });
 
-            animateProcesses(numberOfProcesses, delay, duration);
+            animateProcesses(processEntries, delay, duration);
+
+            // for(i = 0; i < numberOfProcesses; i++) {
+
+            //     num = i + 1;
+
+
+            //     // //adding process
+            //     // var html = "<div id=\"p" + num + "\" class=\"process-sjf\"><div><b>P" + num + "</b></div> <div id=\"burstTime\">5 ms</div> </div>";
+            //     // $("#anim").append(html);
+
+
+            //     //fetching and styling process
+            //     var process = document.getElementById("P" + num);
+
+            //     //adding top
+            //     topFinal = topVal + (topDif * i);
+            //     process.style.top = topFinal +"%";
+
+            // }
+
+            // animateProcesses(numberOfProcesses, delay, duration);
 
         }
 
-        function animateProcesses(numberOfProcesses, delay, duration) {
-            var i;
+        function animateProcesses(processEntries, delay, duration) {
+            var i = 0;
             var num;
 
             var nextDelay = 0;
-            for(i = 0; i < numberOfProcesses; i++) {
-                
+            processEntries.forEach(function (item) {
+
                 //process number
                 num = i + 1;
 
+
                 //fetching current process and adding animation
-                var process = document.getElementById("p" + num);
+                var process = document.getElementById(item[0]);
                 process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
                 if (i==0) {
                     process.style.animationDelay = delay + "s";
@@ -75,6 +111,7 @@
                     nextDelay = delay + duration * i;
                     process.style.animationDelay = nextDelay + "s";
                 }
+
 
                 //Animating the processor
                 var html = "<div id=\"processor" + num + "\" class=\"processor-sjf\"></div>";
@@ -88,7 +125,39 @@
                 var count = Math.ceil(duration * 0.4);
                 processor.style.animationIterationCount = count + "";
                 processor.classList.add("animate__heartBeat");
-            }
+
+
+                i = i + 1;
+            });
+
+            // for(i = 0; i < numberOfProcesses; i++) {
+                
+            //     //process number
+            //     num = i + 1;
+
+            //     //fetching current process and adding animation
+            //     var process = document.getElementById("P" + num);
+            //     process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
+            //     if (i==0) {
+            //         process.style.animationDelay = delay + "s";
+            //     } else {
+            //         nextDelay = delay + duration * i;
+            //         process.style.animationDelay = nextDelay + "s";
+            //     }
+
+            //     //Animating the processor
+            //     var html = "<div id=\"processor" + num + "\" class=\"processor-sjf\"></div>";
+            //     $("#anim").append(html);
+                
+            //     var processor = document.getElementById("processor"+num);
+
+            //     var processorDelay = (duration * 0.5) + (duration * i);
+            //     processor.style.animationDelay = processorDelay + "s";
+                
+            //     var count = Math.ceil(duration * 0.4);
+            //     processor.style.animationIterationCount = count + "";
+            //     processor.classList.add("animate__heartBeat");
+            // }
         }
     </script>    
 </div>  
