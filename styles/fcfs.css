@@ -1,0 +1,81 @@
+body {
+    font-family:verdana;
+    background-color:white;
+}
+
+.process {
+    height: 50px;
+    width: 50px;
+    background-color:lightgreen;
+    float: left;
+    margin: 0 2%;
+    border-radius: 50%;
+    top: 10%;
+    left: 6%;
+    animation-name: toProcessor 5s infinite;
+}
+
+.queue {
+    height: 50px;
+    width: 600px;
+    background-color:lightgrey;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.processor {
+    height: 300px;
+    width: 250px;
+    background-color:yellow;
+    float: right;
+    margin: 0 15%;
+
+}
+
+.header {
+    padding: 60px;
+    text-align: center;
+    color:black;
+    font-size: 30px;
+}
+
+.element {  
+  float: left;
+  shape-outside: circle(50%);
+  width: 200px;
+  height: 200px;
+}
+
+.text { 
+    justify-content: center; 
+    align-items: center
+}
+
+@keyframes toProcessor {
+    from {
+        margin-left: 0%;
+    }
+    
+    to {
+        margin-left: 75%;
+    }
+}
+
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+    100% { 
+        opacity: 0;
+    }
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% { 
+        opacity: 1;
+    }
+}
