@@ -20,4 +20,9 @@ $(document).ready(function() {
         event.preventDefault();
         $("main").load("../templates/srt.html");        
     });
+
+    $("#rr").click(function() {
+        event.preventDefault();
+        $("main").load("../templates/rr2.html");        
+    });
 });

@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../styles/sjf.css">
     <link rel="stylesheet" type="text/css" href="../styles/srt.css">
     <link rel="stylesheet" type="text/css" href="../styles/fcfs.css">
+    <link rel="stylesheet" type="text/css" href="../styles/rr2.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -71,6 +72,32 @@
       </div>
     </div>
 
+    <div class="modal fade" id="rrModal" tabindex="-1" role="dialog" aria-labelledby="rrModalLabel" aria-hidden="false">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="rrModalLabel"><b>Round Robin</b></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="rrModalForm">
+              <div class="form-group">
+                <label for="numProcesses">Number of processes</label>
+                <input class="form-control" id="rrNumProcesses" aria-describedby="numProcessesHelp" placeholder="Enter number of processes">
+                <small id="numProcessesHelp" class="form-text text-muted">Numbers between 1 - 5 work best.</small>
+              </div>
+            </form>
+          </div>
+          <div id ="rrModalFooter" class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="rrNumProcessesBtn" type="button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="false">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -103,16 +130,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
               <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li id="psA" class="nav-item dropdown">
+                  <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Preemptive Scheduling
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="rr.html">Round Robin</a>
+                    <a id="rr" class="dropdown-item" href="">Round Robin</a>
                     <a id = "srt" class="dropdown-item" href="#">Shortest Remaining Time </a>
                   </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li id="npsA" class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Non-preemptive Scheduling
                   </a>
