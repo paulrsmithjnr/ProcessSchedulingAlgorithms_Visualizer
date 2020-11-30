@@ -1,32 +1,32 @@
 <html>
 
-<head>
-    <title>FCFS</title>
-    <link rel="stylesheet" type="text/css" href="../styles/fcfs.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+    <head>
+        <title>FCFS</title>
+        <link rel="stylesheet" type="text/css" href="../styles/fcfs.css">
+        <script src="fcfs.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
 
-<body>
-    <div class="header">
-        <h1>First Come First Serve</h1>
-    </div>
-    <div class="queue">
-        <b>Queue</b></p>
-    </div>   
-    <div><p> </p></div>
-    <div class="process">
-        <b><center>P3</center></b>
+    <body>
+        <div class="header">
+            <h1>First Come First Serve</h1>
         </div>
-    <div class="process">
-        <b><center>P2</center></b>
-    </div>
-    <div class="process">
-        <b><center>P1</center></b>
-    </div>
-    <div class="processor">
-        <b><u><center>Processor</center></u></b>
-    </div>
-    <div><p>    </p></div>
-</body>    
+
+        <div class = "fprocessSec">
+            <div><p><u><b><center>Queue</center></b></u></p></div>
+            <div id="fprocess1"><b><center>P1</center></b></div>
+            <div class="fprocess2"><b><center>P2</center></b></div>
+            <div class="fprocess3"><b><center>P3</center></b></div>
+        </div>
+         
+        <div class="fprocessor">
+            <b><u><center>Processor</center></u></b>
+        </div>
+        
+        <div>
+            <button onclick="move()">START</button>
+        </div>
+        
+    </body>    
    
 </html>
