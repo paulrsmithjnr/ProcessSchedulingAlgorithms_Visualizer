@@ -84,6 +84,30 @@
     left: 8.5%;
 }
 
+#leftArrow {
+    position: absolute;
+    height: auto;
+    width: 5%;
+    top: 85%;
+    left: 19%;
+}
+
+#rejoinRR {
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    background-color: grey;
+    font-size: smaller;
+    color: white;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 81%;
+    left: 25%;
+}
+
 #stateLegend {
     position: absolute;
     border: 2px solid black;
@@ -122,7 +146,7 @@
     text-align: center;
 }
 
-@keyframes moveToProcessor-sjf {
+@keyframes moveToProcessor-rr {
 
     10% {
         left: 72%;
@@ -170,6 +194,64 @@
         left: 90%;
         top: 55%;
         background-color: black;
+        opacity: 0;
+    }
+}
+
+@keyframes moveToProcessorToQueue-rr {
+
+    10% {
+        left: 72%;
+        top: 55%;
+    }
+    20% {
+        left: 72%;
+        top: 55%;
+    }
+    30% {
+        left: 72%;
+        top: 55%;
+    }
+    40% {
+        left: 72%;
+        top: 55%;
+    }
+    50% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    60% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    70% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    80% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    90% {
+        left: 72%;
+        top: 55%;
+        background-color: green;
+        opacity: 1;
+    }
+    95% {
+        top: 81%;
+        left: 25%;
+        background-color: green;
+        opacity: 1;
+    }
+    100% {
+        top: 81%;
+        left: 25%;
+        background-color: green;
         opacity: 0;
     }
 }

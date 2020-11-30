@@ -9,6 +9,8 @@
             </div>
         </div>
         <div id="rrQueue"><b>QUEUE</b></div>
+        <img id="leftArrow" src="../images/left.png" alt="left arrow">
+        <div id="rejoinRR">Rejoin<br>Queue</div>
         <div id="stateLegend">
             <div class="legendItem"><div id="colourReady"></div>Ready</div>
             <div class="legendItem"><div id="colourRunning"></div>Running</div>
@@ -215,7 +217,7 @@
 
             //fetching current process and adding animation
             var process = document.getElementById(item[0]);
-            process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
+            process.style.animation = "moveToProcessorToQueue-rr " + duration + "s linear forwards";
             if (i==0) {
                 process.style.animationDelay = delay + "s";
             } else {
