@@ -49,12 +49,18 @@
     
 }
 
-
 #processSlot {
     background-color: black;
     border-radius: 100%;
     height: 50px;
     width: 50px;
+}
+
+#restartBtn, #newBtn {
+    position: relative;
+    top: 90%;
+    left: 40%;
+    width: 10%;
 }
 
 @keyframes moveToProcessor-sjf {

@@ -8,6 +8,8 @@
             <div id="slot">
             </div>
         </div>
+        <button id="restartBtn" type="button" class="btn btn-danger">Restart</button>
+        <button id="newBtn" type="button" class="btn btn-success">New</button>
     </div>
 </div> 
 
@@ -53,6 +55,30 @@
         
         var sjfProcessesInfoBtn = document.getElementById("sjfProcessesInfoBtn");
         sjfProcessesInfoBtn.onclick = function() {
+
+            //setting onclick listeners
+            var restartBtn = document.getElementById("restartBtn");
+            restartBtn.onclick = function() {
+                var sjf = document.getElementById("sjf");
+                sjf.click();
+            };
+
+            var newBtn = document.getElementById("newBtn");
+            newBtn.onclick = function() {
+                var sjfModalForm = document.getElementById("sjfModalForm");
+                sjfModalForm.innerHTML = "<div class=\"form-group\">" +
+                                            "<label for=\"numProcesses\">Number of processes</label>" +
+                                            "<input class=\"form-control\" id=\"sjfNumProcesses\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter number of processes\">" +
+                                            "<small id=\"numProcessesHelp\" class=\"form-text text-muted\">Numbers between 1 - 5 work best.</small>" +
+                                         "</div>";
+
+                var sjfModalFooter = document.getElementById("sjfModalFooter");
+                sjfModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                           "<button id=\"sjfNumProcessesBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+
+                $("main").load("../templates/sjf.html");
+            };
+
             var sjfProcessesTimeTxtBxs = document.getElementsByClassName("sjfProcesses");
 
             var processMap = new Object();
