@@ -67,28 +67,6 @@
             });
 
             animateProcesses(processEntries, delay, duration);
-
-            // for(i = 0; i < numberOfProcesses; i++) {
-
-            //     num = i + 1;
-
-
-            //     // //adding process
-            //     // var html = "<div id=\"p" + num + "\" class=\"process-sjf\"><div><b>P" + num + "</b></div> <div id=\"burstTime\">5 ms</div> </div>";
-            //     // $("#anim").append(html);
-
-
-            //     //fetching and styling process
-            //     var process = document.getElementById("P" + num);
-
-            //     //adding top
-            //     topFinal = topVal + (topDif * i);
-            //     process.style.top = topFinal +"%";
-
-            // }
-
-            // animateProcesses(numberOfProcesses, delay, duration);
-
         }
 
         function animateProcesses(processEntries, delay, duration) {
@@ -129,35 +107,6 @@
 
                 i = i + 1;
             });
-
-            // for(i = 0; i < numberOfProcesses; i++) {
-                
-            //     //process number
-            //     num = i + 1;
-
-            //     //fetching current process and adding animation
-            //     var process = document.getElementById("P" + num);
-            //     process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
-            //     if (i==0) {
-            //         process.style.animationDelay = delay + "s";
-            //     } else {
-            //         nextDelay = delay + duration * i;
-            //         process.style.animationDelay = nextDelay + "s";
-            //     }
-
-            //     //Animating the processor
-            //     var html = "<div id=\"processor" + num + "\" class=\"processor-sjf\"></div>";
-            //     $("#anim").append(html);
-                
-            //     var processor = document.getElementById("processor"+num);
-
-            //     var processorDelay = (duration * 0.5) + (duration * i);
-            //     processor.style.animationDelay = processorDelay + "s";
-                
-            //     var count = Math.ceil(duration * 0.4);
-            //     processor.style.animationIterationCount = count + "";
-            //     processor.classList.add("animate__heartBeat");
-            // }
         }
     </script>    
 </div>  
