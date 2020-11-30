@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../styles/index.css">
     <link rel="stylesheet" type="text/css" href="../styles/sjf.css">
     <link rel="stylesheet" type="text/css" href="../styles/srt.css">
+    <link rel="stylesheet" type="text/css" href="../styles/fcfs.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -44,6 +45,32 @@
       </div>
     </div>
 
+    <div class="modal fade" id="fcfsModal" tabindex="-1" role="dialog" aria-labelledby="fcfsModalLabel" aria-hidden="false">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="fcfsModalLabel"><b>First Come, First Served</b></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="fcfsModalForm">
+              <div class="form-group">
+                <label for="numProcesses">Number of processes</label>
+                <input class="form-control" id="fcfsNumProcesses" aria-describedby="numProcessesHelp" placeholder="Enter number of processes">
+                <small id="numProcessesHelp" class="form-text text-muted">Numbers between 1 - 5 work best.</small>
+              </div>
+            </form>
+          </div>
+          <div id ="fcfsModalFooter" class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="fcfsNumProcessesBtn" type="button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="false">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -67,7 +94,7 @@
       <div id="body">
         <div id="header">
           <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-light">
-            <a class="navbar-brand" href="#">
+            <a id="navbarLogo" class="navbar-brand" href="#">
               <img id="avLogo" src="../images/AlgoVisualizer Logo.png" alt="AlgoVisualizer Logo">
               AlgoVisualizer
             </a>
@@ -90,7 +117,7 @@
                     Non-preemptive Scheduling
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="fcfs.html">First Come, First Serve</a>
+                    <a id="fcfs" class="dropdown-item" href="#">First Come, First Served</a>
                     <a id="sjf" class="dropdown-item" href="#">Shortest Job First</a>
                   </div>
                 </li>

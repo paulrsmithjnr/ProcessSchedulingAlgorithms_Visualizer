@@ -1,32 +1,245 @@
-<html>
-
-    <head>
-        <title>FCFS</title>
-        <link rel="stylesheet" type="text/css" href="../styles/fcfs.css">
-        <script src="fcfs.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-
-    <body>
-        <div class="header">
-            <h1>First Come First Serve</h1>
+<div id="mainContainer">
+    <h3 class = "prior">First Come, First Served</h3>
+    <div id="anim">
+        <div id="primaryProcessor" class="processor-fcfs">
+            <div id="tag">
+                PROCESSOR
+            </div>
+            <div id="slot">
+            </div>
         </div>
+        <div id="sjfQueue"><b>QUEUE</b></div>
+        <div id="stateLegend">
+            <div class="legendItem"><div id="colourReady"></div>Ready</div>
+            <div class="legendItem"><div id="colourRunning"></div>Running</div>
+            <div class="legendItem"><div id="colourTerminated"></div>Terminated</div>
+        </div>
+        <button id="restartBtn" type="button" class="btn btn-danger">Restart</button>
+        <button id="newBtn" type="button" class="btn btn-success">New</button>
+        <button id="detailsBtn" type="button" class="btn btn-secondary">Details</button>
+    </div>
+</div> 
 
-        <div class = "fprocessSec">
-            <div><p><u><b><center>Queue</center></b></u></p></div>
-            <div id="fprocess1"><b><center>P1</center></b></div>
-            <div class="fprocess2"><b><center>P2</center></b></div>
-            <div class="fprocess3"><b><center>P3</center></b></div>
-        </div>
-         
-        <div class="fprocessor">
-            <b><u><center>Processor</center></u></b>
-        </div>
+<script>
+    $('#fcfsModal').modal('show');
+
+    var fcfsNumProcessesBtn = document.getElementById("fcfsNumProcessesBtn");
+    fcfsNumProcessesBtn.onclick = function() {
+        var numProcessesTxtBx = document.getElementById("fcfsNumProcesses");
+        var numProcesses = parseInt(numProcessesTxtBx.value);
+
+        var fcfsModalForm = document.getElementById("fcfsModalForm");
+        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var i;
+        var num;
+        for(i = 0; i < numProcesses; i++) {
+            num = i + 1;
+
+            html = html + "<div class=\"form-group\">" + 
+                            "<input class=\"form-control fcfsProcesses\" id=\"fcfsP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                           "</div>";
+        }
+
+        html = html + "<div class=\"form-group\">" +
+                        "<label for=\"animationSpeedFCFS\">Animation Speed</label>" +
+                        "<select class=\"form-control\" id=\"animationSpeedFCFS\">" +
+                            "<option>Slow</option>" +
+                            "<option>Fast</option>" +
+                        "</select>" +
+                      "</div>";
+
+        fcfsModalForm.innerHTML = html;
+
+        var fcfsModalFooter = document.getElementById("fcfsModalFooter");
+        fcfsModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                   "<button id=\"fcfsProcessesInfoBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+    
         
-        <div>
-            <button onclick="move()">START</button>
-        </div>
+        var fcfsProcessesInfoBtn = document.getElementById("fcfsProcessesInfoBtn");
+        fcfsProcessesInfoBtn.onclick = function() {
+
+            /*******************SETTING ONCLICK LISTENERS*********************/
+            var restartBtn = document.getElementById("restartBtn");
+            restartBtn.onclick = function() {
+                var fcfs = document.getElementById("fcfs");
+                fcfs.click();
+            };
+
+            var newBtn = document.getElementById("newBtn");
+            newBtn.onclick = function() {
+                var fcfsModalForm = document.getElementById("fcfsModalForm");
+                fcfsModalForm.innerHTML = "<div class=\"form-group\">" +
+                                            "<label for=\"numProcesses\">Number of processes</label>" +
+                                            "<input class=\"form-control\" id=\"fcfsNumProcesses\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter number of processes\">" +
+                                            "<small id=\"numProcessesHelp\" class=\"form-text text-muted\">Numbers between 1 - 5 work best.</small>" +
+                                         "</div>";
+
+                var fcfsModalFooter = document.getElementById("fcfsModalFooter");
+                fcfsModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                           "<button id=\"fcfsNumProcessesBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+
+                $("main").load("../templates/fcfs.html");
+            };
+            /*******************SETTING ONCLICK LISTENERS*********************/
+
+
+            var fcfsProcessesTimeTxtBxs = document.getElementsByClassName("fcfsProcesses");
+            var animationSpeedFCFS = document.getElementById("animationSpeedFCFS");
+            var speed = animationSpeedFCFS.value;
+
+            var duration;
+            var delay;
+
+            if(speed.localeCompare("Slow") == 0) {
+                duration = 9;
+                delay = 3;
+            } else {
+                duration = 3;
+                delay = 1;
+            }
+
+            var processMap = new Object();
+            var num;
+            for(var i = 0; i < fcfsProcessesTimeTxtBxs.length; i++) {
+                num = i + 1;
+
+                processMap["P"+num] = parseInt(fcfsProcessesTimeTxtBxs[i].value);
+            }
+
+            getParameters(processMap, num, duration, delay);
+            $('#fcfsModal').modal('hide');
+        };
+    
+    };
+
+    function getParameters(processMap, numberOfProcesses, duration, delay) {
+
+        var processEntries = Object.entries(processMap);
+
+        // processEntries.sort((a,b) => a[1]-b[1])
+
+        var detailsModalTitle = document.getElementById("detailsModalTitle");
+        detailsModalTitle.innerHTML = "First Come, First Served - Details";
+
+        var detailsModalBody = document.getElementById("detailsModalBody");
+        var html = "<table id=\"detailsTables\" class=\"table table-striped table-dark table-hover\">" +
+                    "<thead>" +
+                        "<tr>" +
+                        "<th scope=\"col\">Order</th>" +
+                        "<th scope=\"col\">Process</th>" +
+                        "<th scope=\"col\">Burst Time</th>" +
+                        "<th scope=\"col\">Waiting Time</th>" +
+                        "</tr>" +
+                    "</thead>" +
+                    "<tbody>";
+
+        var averageWaitTime = 0;
+        var currentWaitTime = 0;
+        var order = 1;
+        processEntries.forEach(function(item) {
+
+            if(order==1) {
+                currentWaitTime = 0;
+            } else {
+                currentWaitTime = currentWaitTime + processEntries[order-2][1]
+            }
+
+            html = html + "<tr>" +
+                            "<th scope=\"row\">" + order + "</th>" +
+                            "<td>" + item[0] + "</td>" +
+                            "<td>" + item[1] + "ms</td>" +
+                            "<td>" + currentWaitTime + "ms</td>" +
+                           "</tr>";
+            
+            averageWaitTime = averageWaitTime + currentWaitTime;
+            order++;
+        });
+        averageWaitTime = averageWaitTime/processEntries.length;
+        html = html + "<tr>" +
+                        "<th scope=\"row\"></th>" +
+                        "<td></td>" +
+                        "<td><strong>Average Wait Time</strong></td>" +
+                        "<td><strong>" + averageWaitTime.toFixed(1) + "ms</strong></td>" +
+                      "</tr>" +
+                    "</tbody>" +
+                  "</table>";
         
-    </body>    
-   
-</html>
+        detailsModalBody.innerHTML = html;
+
+        var detailsBtn = document.getElementById("detailsBtn");
+        detailsBtn.onclick = function(){
+            $('#detailsModal').modal('show');
+        };
+
+        loadProcesses(numberOfProcesses, processEntries, duration, delay);
+    }
+    
+    
+    function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
+        
+        var i = 0;
+        var num;
+
+        var topVal = 10;
+        var topDif = 15;
+        var topFinal = 0;
+
+        processEntries.forEach(function (item) {
+            //adding process
+            var html = "<div id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + item[1] + "ms</div> </div>";
+            $("#anim").append(html);
+
+            //fetching and styling process
+            var process = document.getElementById(item[0]);
+
+            // adding top
+            topFinal = topVal + (topDif * i);
+            process.style.top = topFinal +"%";
+
+            i = i + 1;
+        });
+
+        animateProcesses(processEntries, delay, duration);
+    }
+
+    function animateProcesses(processEntries, delay, duration) {
+        var i = 0;
+        var num;
+
+        var nextDelay = 0;
+        processEntries.forEach(function (item) {
+
+            //process number
+            num = i + 1;
+
+
+            //fetching current process and adding animation
+            var process = document.getElementById(item[0]);
+            process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
+            if (i==0) {
+                process.style.animationDelay = delay + "s";
+            } else {
+                nextDelay = delay + duration * i;
+                process.style.animationDelay = nextDelay + "s";
+            }
+
+
+            //Animating the processor
+            var html = "<div id=\"processor" + num + "\" class=\"processor-fcfs\"></div>";
+            $("#anim").append(html);
+            
+            var processor = document.getElementById("processor"+num);
+
+            var processorDelay = (duration * 0.5) + (duration * i);
+            processor.style.animationDelay = processorDelay + "s";
+            
+            var count = Math.ceil(duration * 0.4);
+            processor.style.animationIterationCount = count + "";
+            processor.classList.add("animate__heartBeat");
+
+
+            i = i + 1;
+        });
+    }
+</script>    
+ 

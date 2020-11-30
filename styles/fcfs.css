@@ -1,116 +1,20 @@
-body {
-    font-family:verdana;
-    background-color:white;
-}
-
-.fprocessSec {  /*Section for all the processes*/
-    float:left;
-    width: 100px;
-    height: 340px;
-    background-color: coral; 
-}
-
-.fprocessorSec {    /*Section for the processor*/
-    float:left;
-    width: 100px;
+.processor-fcfs {
     height: 200px;
+    width: 200px;
+    top: 28%;
+    left: 65%;
+    background-color: yellow;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: absolute;    
 }
 
-#fprocess1 {    /*First Process*/
-    height: 50px;
-    width: 50px;
-    background-color:lightgreen;
-    float: left;
-    margin: 0 5%;
-    border: 1px solid black;
-    border-radius: 50%;
-    top: 10%;
-    left: 6%;
-    animation-name: toProcessor 5s infinite;
-}
-
-.fprocess2 {       /*Second Process*/
-    height: 50px;
-    width: 50px;
-    background-color:lightgreen;
-    float: left;
-    margin: 0 5%;
-    border: 1px solid black;
-    border-radius: 50%;
-    top: 10%;
-    left: 6%;
-    animation-name: toProcessor 5s infinite;
-}
-
-.fprocess3 {        /*Third Process*/
-    height: 50px;
-    width: 50px;
-    background-color:lightgreen;
-    float: left;
-    margin: 0 5%;
-    border: 1px solid black;
-    border-radius: 50%;
-    top: 10%;
-    left: 6%;
-    animation-name: toProcessor 5s infinite;
-}
-
-.ready {
-    background-color: green;
-}
-
-.running {
-    background-color: red;
-}
-
-.terminated {
-    background-color: black;
-}
-
-.fprocessor {
-    height: 300px;
-    width: 250px;
-    background-color:yellow;
-    border: 2px solid black;
-    float: right;
-    margin: 0 15%;
-
-}
-
-.header {
-    padding: 60px;
-    text-align: center;
-    color:black;
-    font-size: 30px;
-}
-
-.element {  
-  float: left;
-  shape-outside: circle(50%);
-  width: 200px;
-  height: 200px;
-}
-
-.text { 
-    justify-content: center; 
-    align-items: center
-}
-
-
-@keyframes fadeout {
-    0% {
-        opacity: 1;
-    }
-    100% { 
-        opacity: 0;
-    }
-}
-
-@keyframes fadein {
-    0% {
-        opacity: 0;
-    }
-    100% { 
-        opacity: 1;
-    }
+.processor-fcfs #tag, .processor-fcfs #slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
 }

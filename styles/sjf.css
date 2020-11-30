@@ -22,13 +22,10 @@
 }
 
 .processor-sjf {
-    /* border: 4px black solid; */
     height: 200px;
     width: 200px;
     top: 28%;
     left: 65%;
-    /* margin-right: 15%;
-    float: right;*/
     background-color: orange;    
 }
 
