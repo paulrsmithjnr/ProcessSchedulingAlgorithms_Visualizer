@@ -9,104 +9,159 @@
             </div>
         </div>
     </div>
+</div> 
 
-    <script>
-        //custom sleep function
-        // const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+<script>
+    //custom sleep function
+    // const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
-        getParameters();
-        function getParameters() {
-            var numberOfProcesses = 5;
-            var i;
+    // getParameters();
+    $('#sjfModal').modal('show');
 
-            var processNum;
-            var randNum;
+    var sjfNumProcessesBtn = document.getElementById("sjfNumProcessesBtn");
+    sjfNumProcessesBtn.onclick = function() {
+        var numProcessesTxtBx = document.getElementById("sjfNumProcesses");
+        var numProcesses = parseInt(numProcessesTxtBx.value);
+        // console.log(numProcesses);
+
+        var sjfModalForm = document.getElementById("sjfModalForm");
+        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var i;
+        var num;
+        for(i = 0; i < numProcesses; i++) {
+            num = i + 1;
+
+            html = html + "<div class=\"form-group\">" + 
+                            "<input class=\"form-control sjfProcesses\" id=\"sjfP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                           "</div>";
+        }
+
+        html = html + "<div class=\"form-group\">" +
+                        "<label for=\"animationSpeedSJF\">Animation Speed</label>" +
+                        "<select class=\"form-control\" id=\"animationSpeedSJF\">" +
+                            "<option>Slow</option>" +
+                            "<option>Fast</option>" +
+                        "</select>" +
+                      "</div>";
+
+        sjfModalForm.innerHTML = html;
+
+        var sjfModalFooter = document.getElementById("sjfModalFooter");
+        sjfModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                   "<button id=\"sjfProcessesInfoBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+    
+        
+        var sjfProcessesInfoBtn = document.getElementById("sjfProcessesInfoBtn");
+        sjfProcessesInfoBtn.onclick = function() {
+            var sjfProcessesTimeTxtBxs = document.getElementsByClassName("sjfProcesses");
+
             var processMap = new Object();
-            for (i = 0; i < numberOfProcesses; i++) {
-                processNum = i + 1;
-                randNum = Math.floor((Math.random() * 10) + 1);
-
-                processMap["P" + processNum] = randNum;
-            }
-
-            var processEntries = Object.entries(processMap);
-
-            processEntries.sort((a,b) => a[1]-b[1])
-
-            loadProcesses(numberOfProcesses, processEntries);
-        }
-        
-        
-        function loadProcesses(numberOfProcesses, processEntries) {
-            // var numberOfProcesses = 5;
-
-            var duration = 6;
-
-            var delay = 2;
-            
-            var i = 0;
             var num;
-
-            var topVal = 10;
-            var topDif = 15;
-            var topFinal = 0;
-
-            processEntries.forEach(function (item) {
-                //adding process
-                var html = "<div id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + item[1] + " ms</div> </div>";
-                $("#anim").append(html);
-
-                //fetching and styling process
-                var process = document.getElementById(item[0]);
-
-                // adding top
-                topFinal = topVal + (topDif * i);
-                process.style.top = topFinal +"%";
-
-                i = i + 1;
-            });
-
-            animateProcesses(processEntries, delay, duration);
-        }
-
-        function animateProcesses(processEntries, delay, duration) {
-            var i = 0;
-            var num;
-
-            var nextDelay = 0;
-            processEntries.forEach(function (item) {
-
-                //process number
+            for(var i = 0; i < sjfProcessesTimeTxtBxs.length; i++) {
                 num = i + 1;
 
+                processMap["P"+num] = parseInt(sjfProcessesTimeTxtBxs[i].value);
+            }
+            console.log(processMap);
 
-                //fetching current process and adding animation
-                var process = document.getElementById(item[0]);
-                process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
-                if (i==0) {
-                    process.style.animationDelay = delay + "s";
-                } else {
-                    nextDelay = delay + duration * i;
-                    process.style.animationDelay = nextDelay + "s";
-                }
+            getParameters(processMap, num);
+            $('#sjfModal').modal('hide');
+        };
+    
+    };
+
+    function getParameters(processMap, numberOfProcesses) {
+        // var numberOfProcesses = 5;
+        var i;
+
+        var processNum;
+        var randNum;
+        // var processMap = new Object();
+        // for (i = 0; i < numberOfProcesses; i++) {
+        //     processNum = i + 1;
+        //     randNum = Math.floor((Math.random() * 10) + 1);
+
+        //     processMap["P" + processNum] = randNum;
+        // }
+
+        var processEntries = Object.entries(processMap);
+
+        processEntries.sort((a,b) => a[1]-b[1])
+
+        loadProcesses(numberOfProcesses, processEntries);
+    }
+    
+    
+    function loadProcesses(numberOfProcesses, processEntries) {
+        // var numberOfProcesses = 5;
+
+        var duration = 6;
+
+        var delay = 2;
+        
+        var i = 0;
+        var num;
+
+        var topVal = 10;
+        var topDif = 15;
+        var topFinal = 0;
+
+        processEntries.forEach(function (item) {
+            //adding process
+            var html = "<div id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + item[1] + " ms</div> </div>";
+            $("#anim").append(html);
+
+            //fetching and styling process
+            var process = document.getElementById(item[0]);
+
+            // adding top
+            topFinal = topVal + (topDif * i);
+            process.style.top = topFinal +"%";
+
+            i = i + 1;
+        });
+
+        animateProcesses(processEntries, delay, duration);
+    }
+
+    function animateProcesses(processEntries, delay, duration) {
+        var i = 0;
+        var num;
+
+        var nextDelay = 0;
+        processEntries.forEach(function (item) {
+
+            //process number
+            num = i + 1;
 
 
-                //Animating the processor
-                var html = "<div id=\"processor" + num + "\" class=\"processor-sjf\"></div>";
-                $("#anim").append(html);
-                
-                var processor = document.getElementById("processor"+num);
-
-                var processorDelay = (duration * 0.5) + (duration * i);
-                processor.style.animationDelay = processorDelay + "s";
-                
-                var count = Math.ceil(duration * 0.4);
-                processor.style.animationIterationCount = count + "";
-                processor.classList.add("animate__heartBeat");
+            //fetching current process and adding animation
+            var process = document.getElementById(item[0]);
+            process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
+            if (i==0) {
+                process.style.animationDelay = delay + "s";
+            } else {
+                nextDelay = delay + duration * i;
+                process.style.animationDelay = nextDelay + "s";
+            }
 
 
-                i = i + 1;
-            });
-        }
-    </script>    
-</div>  
+            //Animating the processor
+            var html = "<div id=\"processor" + num + "\" class=\"processor-sjf\"></div>";
+            $("#anim").append(html);
+            
+            var processor = document.getElementById("processor"+num);
+
+            var processorDelay = (duration * 0.5) + (duration * i);
+            processor.style.animationDelay = processorDelay + "s";
+            
+            var count = Math.ceil(duration * 0.4);
+            processor.style.animationIterationCount = count + "";
+            processor.classList.add("animate__heartBeat");
+
+
+            i = i + 1;
+        });
+    }
+</script>    
+ 
