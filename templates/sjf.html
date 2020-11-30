@@ -30,7 +30,6 @@
     sjfNumProcessesBtn.onclick = function() {
         var numProcessesTxtBx = document.getElementById("sjfNumProcesses");
         var numProcesses = parseInt(numProcessesTxtBx.value);
-        // console.log(numProcesses);
 
         var sjfModalForm = document.getElementById("sjfModalForm");
         var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
@@ -62,7 +61,7 @@
         var sjfProcessesInfoBtn = document.getElementById("sjfProcessesInfoBtn");
         sjfProcessesInfoBtn.onclick = function() {
 
-            //setting onclick listeners
+            /*******************SETTING ONCLICK LISTENERS*********************/
             var restartBtn = document.getElementById("restartBtn");
             restartBtn.onclick = function() {
                 var sjf = document.getElementById("sjf");
@@ -84,8 +83,24 @@
 
                 $("main").load("../templates/sjf.html");
             };
+            /*******************SETTING ONCLICK LISTENERS*********************/
+
 
             var sjfProcessesTimeTxtBxs = document.getElementsByClassName("sjfProcesses");
+            var animationSpeedSJF = document.getElementById("animationSpeedSJF");
+            var speed = animationSpeedSJF.value;
+            console.log("speed: " + speed);
+
+            var duration;
+            var delay;
+
+            if(speed.localeCompare("Slow") == 0) {
+                duration = 9;
+                delay = 3;
+            } else {
+                duration = 3;
+                delay = 1;
+            }
 
             var processMap = new Object();
             var num;
@@ -94,42 +109,29 @@
 
                 processMap["P"+num] = parseInt(sjfProcessesTimeTxtBxs[i].value);
             }
-            console.log(processMap);
 
-            getParameters(processMap, num);
+            getParameters(processMap, num, duration, delay);
             $('#sjfModal').modal('hide');
         };
     
     };
 
-    function getParameters(processMap, numberOfProcesses) {
-        // var numberOfProcesses = 5;
-        var i;
-
-        var processNum;
-        var randNum;
-        // var processMap = new Object();
-        // for (i = 0; i < numberOfProcesses; i++) {
-        //     processNum = i + 1;
-        //     randNum = Math.floor((Math.random() * 10) + 1);
-
-        //     processMap["P" + processNum] = randNum;
-        // }
+    function getParameters(processMap, numberOfProcesses, duration, delay) {
 
         var processEntries = Object.entries(processMap);
 
         processEntries.sort((a,b) => a[1]-b[1])
 
-        loadProcesses(numberOfProcesses, processEntries);
+        loadProcesses(numberOfProcesses, processEntries, duration, delay);
     }
     
     
-    function loadProcesses(numberOfProcesses, processEntries) {
+    function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
         // var numberOfProcesses = 5;
 
-        var duration = 6;
+        // var duration = 9;
 
-        var delay = 2;
+        // var delay = 3;
         
         var i = 0;
         var num;
