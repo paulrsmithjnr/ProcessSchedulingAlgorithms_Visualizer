@@ -70,6 +70,13 @@
     width: 10%;
 }
 
+#detailsBtn {
+    position: absolute;
+    top: 90%;
+    left: 88%;
+    width: 10%;
+}
+
 #sjfQueue {
     position: absolute;
     background-color: gray;
@@ -112,6 +119,10 @@
 
 #colourTerminated {
     background-color: black;
+}
+
+#detailsTables {
+    text-align: center;
 }
 
 @keyframes moveToProcessor-sjf {
