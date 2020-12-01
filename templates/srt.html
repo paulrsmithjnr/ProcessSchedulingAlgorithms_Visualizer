@@ -8,9 +8,9 @@
             <div id="slot">
             </div>
         </div>
-        <div id="srtQueue"><b>READY QUEUE</b></div>
+        <div id="sjfQueue"><b>QUEUE</b></div>
         <img id="leftArrow" src="../images/left.png" alt="left arrow">
-        <div id="rejoinSRT">Rejoin<br>Queue</div>
+        <div id="rejoinRR">Rejoin<br>Queue</div>
         <div id="stateLegend">
             <div class="legendItem"><div id="colourReady"></div>Ready</div>
             <div class="legendItem"><div id="colourRunning"></div>Running</div>
@@ -31,14 +31,14 @@
         var numProcesses = parseInt(numProcessesTxtBx.value);
 
         var srtModalForm = document.getElementById("srtModalForm");
-        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var html = "<small>Enter the burst time(s) for the " + numProcesses + " process(es) below:</small>";
         var i;
         var num;
         for(i = 0; i < numProcesses; i++) {
             num = i + 1;
 
             html = html + "<div class=\"form-group\">" + 
-                            "<input class=\"form-control srtProcesses\" id=\"srtP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                            "<input class=\"form-control srtProcesses\" id=\"srtP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter burst time for P" + num + " (in ms)\">" +
                            "</div>";
         }
 
@@ -86,8 +86,8 @@
 
 
             var srtProcessesTimeTxtBxs = document.getElementsByClassName("srtProcesses");
-            var animationSpeedRR = document.getElementById("animationSpeedRR");
-            var speed = animationSpeedRR.value;
+            var animationSpeedSRT = document.getElementById("animationSpeedSRT");
+            var speed = animationSpeedSRT.value;
 
             var duration;
             var delay;
@@ -105,7 +105,7 @@
             for(var i = 0; i < srtProcessesTimeTxtBxs.length; i++) {
                 num = i + 1;
 
-                processMap["P"+num] = parseInt(rrProcessesTimeTxtBxs[i].value);
+                processMap["P"+num] = parseInt(srtProcessesTimeTxtBxs[i].value);
             }
 
             getParameters(processMap, num, duration, delay);
@@ -130,6 +130,7 @@
                         "<th scope=\"col\">Order</th>" +
                         "<th scope=\"col\">Process</th>" +
                         "<th scope=\"col\">Burst Time</th>" +
+                        "<th scope=\"col\">Arrival Time</th>" +
                         "<th scope=\"col\">Waiting Time</th>" +
                         "</tr>" +
                     "</thead>" +
@@ -150,6 +151,7 @@
                             "<th scope=\"row\">" + order + "</th>" +
                             "<td>" + item[0] + "</td>" +
                             "<td>" + item[1] + "ms</td>" +
+                            "<td>0ms</td>" +
                             "<td>" + currentWaitTime + "ms</td>" +
                            "</tr>";
             
@@ -159,6 +161,7 @@
         averageWaitTime = averageWaitTime/processEntries.length;
         html = html + "<tr>" +
                         "<th scope=\"row\"></th>" +
+                        "<td></td>" +
                         "<td></td>" +
                         "<td><strong>Average Wait Time</strong></td>" +
                         "<td><strong>" + averageWaitTime.toFixed(1) + "ms</strong></td>" +
@@ -217,7 +220,7 @@
 
             //fetching current process and adding animation
             var process = document.getElementById(item[0]);
-            process.style.animation = "moveToProcessorToQueue-srt " + duration + "s linear forwards";
+            process.style.animation = "moveToProcessor-sjf " + duration + "s linear forwards";
             if (i==0) {
                 process.style.animationDelay = delay + "s";
             } else {
