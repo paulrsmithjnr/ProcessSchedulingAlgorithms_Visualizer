@@ -23,6 +23,6 @@ $(document).ready(function() {
 
     $("#rr").click(function() {
         event.preventDefault();
-        $("main").load("../templates/rr2.html");        
+        $("main").load("../templates/rr.html");        
     });
 });

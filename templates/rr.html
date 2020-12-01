@@ -1,32 +1,334 @@
-<!doctype html>
-<html>
-	<head>
-		<title>Round Robin</title>
-		<link rel="stylesheet" type="text/css" href="../styles/rr.css">
-	</head>
+<div id="mainContainer">
+    <h3 class = "prior">ROUND ROBIN</h3>
+    <div id="anim">
+        <div id="primaryProcessorRR" class="processor-rr">
+            <div id="tag">
+                PROCESSOR
+            </div>
+            <div id="slot">
+            </div>
+        </div>
+        <p id="quantumRR">Quantum: </p>
+        <div id="rrQueue"><b>QUEUE</b></div>
+        <img id="leftArrow" src="../images/left.png" alt="left arrow">
+        <div id="rejoinRR">Rejoin<br>Queue</div>
+        <div id="stateLegend">
+            <div class="legendItem"><div id="colourReady"></div>Ready</div>
+            <div class="legendItem"><div id="colourRunning"></div>Running</div>
+            <div class="legendItem"><div id="colourTerminated"></div>Terminated</div>
+        </div>
+        <button id="restartBtn" type="button" class="btn btn-danger">Restart</button>
+        <button id="newBtn" type="button" class="btn btn-success">New</button>
+        <button id="detailsBtn" type="button" class="btn btn-secondary">Details</button>
+    </div>
+</div> 
 
-	<body>
-		<h1>Round Robin Processing</h1>
-		<div class = "process_column">
-			<div class = "pro process1"></div>
-			<div class = "pro process2"></div>
-			<div class = "pro process3"></div>
-			<button id = "start">Click here</button>
+<script>
+    $('#rrModal').modal('show');
 
-		</div>
+    var quantum;
 
-		<div class = "CPU_column">
-			<div class = "CPU">CPU</div>
-			<div class = "time" style = "opacity: 0">-2ms</div>
-			<h3>Total waiting time: <span> </span></h3>
-		</div>
+    var rrNumProcessesBtn = document.getElementById("rrNumProcessesBtn");
+    rrNumProcessesBtn.onclick = function() {
+        var numProcessesTxtBx = document.getElementById("rrNumProcesses");
+        var numProcesses = parseInt(numProcessesTxtBx.value);
 
-		<div class = "queue_column">
-			<div class = "queue">Queue</div>
-			<div class = "ready">Ready</div>
-			<div class = "running">Running</div>
-			<div class = "waiting">Waiting</div>
-			<div class = "terminated">Terminated</div>
-		</div>
-	</body>	
-</html>	
+        quantum = parseInt(document.getElementById("rrQuantum").value);
+
+        var p = document.getElementById("quantumRR");
+        p.innerHTML = p.innerHTML + " " + quantum;
+
+
+        var rrModalForm = document.getElementById("rrModalForm");
+        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var i;
+        var num;
+        for(i = 0; i < numProcesses; i++) {
+            num = i + 1;
+
+            html = html + "<div class=\"form-group\">" + 
+                            "<input class=\"form-control rrProcesses\" id=\"rrP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                           "</div>";
+        }
+
+        html = html + "<div class=\"form-group\">" +
+                        "<label for=\"animationSpeedRR\">Animation Speed</label>" +
+                        "<select class=\"form-control\" id=\"animationSpeedRR\">" +
+                            "<option>Slow</option>" +
+                            "<option>Fast</option>" +
+                        "</select>" +
+                      "</div>";
+
+        rrModalForm.innerHTML = html;
+
+        var rrModalFooter = document.getElementById("rrModalFooter");
+        rrModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                   "<button id=\"rrProcessesInfoBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+    
+        
+        var rrProcessesInfoBtn = document.getElementById("rrProcessesInfoBtn");
+        rrProcessesInfoBtn.onclick = function() {
+
+            /*******************SETTING ONCLICK LISTENERS*********************/
+            var restartBtn = document.getElementById("restartBtn");
+            restartBtn.onclick = function() {
+                var rr = document.getElementById("rr");
+                rr.click();
+            };
+
+            var newBtn = document.getElementById("newBtn");
+            newBtn.onclick = function() {
+                var rrModalForm = document.getElementById("rrModalForm");
+                rrModalForm.innerHTML = "<div class=\"form-group\">" +
+                                            "<label for=\"numProcesses\">Number of processes</label>" +
+                                            "<input class=\"form-control\" id=\"rrNumProcesses\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter number of processes\">" +
+                                            "<small id=\"numProcessesHelp\" class=\"form-text text-muted\">Numbers between 1 - 5 work best.</small>" +
+                                         "</div>" +
+                                         "<div class=\"form-group\">" +
+                                         "<label for=\"rrQuantum\">Quantum</label>" +
+                                         "<input class=\"form-control\" id=\"rrQuantum\" aria-describedby=\"rrQuantumHelp\" placeholder=\"Enter Quantum\">" +
+                                         "</div>";
+
+                var rrModalFooter = document.getElementById("rrModalFooter");
+                rrModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                           "<button id=\"rrNumProcessesBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+
+                $("main").load("../templates/rr.html");
+            };
+            /*******************SETTING ONCLICK LISTENERS*********************/
+
+
+            var rrProcessesTimeTxtBxs = document.getElementsByClassName("rrProcesses");
+            var animationSpeedRR = document.getElementById("animationSpeedRR");
+            var speed = animationSpeedRR.value;
+
+            var duration;
+            var delay;
+
+            if(speed.localeCompare("Slow") == 0) {
+                duration = 9;
+                delay = 3;
+            } else {
+                duration = 3;
+                delay = 1;
+            }
+
+            var processMap = new Object();
+            var num;
+            for(var i = 0; i < rrProcessesTimeTxtBxs.length; i++) {
+                num = i + 1;
+
+                processMap["P"+num] = parseInt(rrProcessesTimeTxtBxs[i].value);
+            }
+
+            getParameters(processMap, num, duration, delay);
+            $('#rrModal').modal('hide');
+        };
+    
+    };
+
+    function getParameters(processMap, numberOfProcesses, duration, delay) {
+
+        var processEntries = Object.entries(processMap);
+
+        // processEntries.sort((a,b) => a[1]-b[1])
+
+        var detailsModalTitle = document.getElementById("detailsModalTitle");
+        detailsModalTitle.innerHTML = "Round Robin - Details";
+
+        var detailsModalBody = document.getElementById("detailsModalBody");
+        var html = "<table id=\"detailsTables\" class=\"table table-striped table-dark table-hover\">" +
+                    "<thead>" +
+                        "<tr>" +
+                        "<th scope=\"col\">Order</th>" +
+                        "<th scope=\"col\">Process</th>" +
+                        "<th scope=\"col\">Burst Time</th>" +
+                        "<th scope=\"col\">Waiting Time</th>" +
+                        "</tr>" +
+                    "</thead>" +
+                    "<tbody>";
+
+        var averageWaitTime = 0;
+        var currentWaitTime = 0;
+        var order = 1;
+        processEntries.forEach(function(item) {
+
+            if(order==1) {
+                currentWaitTime = 0;
+            } else {
+                currentWaitTime = currentWaitTime + processEntries[order-2][1]
+            }
+
+            html = html + "<tr>" +
+                            "<th scope=\"row\">" + order + "</th>" +
+                            "<td>" + item[0] + "</td>" +
+                            "<td>" + item[1] + "ms</td>" +
+                            "<td>" + currentWaitTime + "ms</td>" +
+                           "</tr>";
+            
+            averageWaitTime = averageWaitTime + currentWaitTime;
+            order++;
+        });
+        averageWaitTime = averageWaitTime/processEntries.length;
+        html = html + "<tr>" +
+                        "<th scope=\"row\"></th>" +
+                        "<td></td>" +
+                        "<td><strong>Average Wait Time</strong></td>" +
+                        "<td><strong>" + averageWaitTime.toFixed(1) + "ms</strong></td>" +
+                      "</tr>" +
+                    "</tbody>" +
+                  "</table>";
+        
+        detailsModalBody.innerHTML = html;
+
+        var detailsBtn = document.getElementById("detailsBtn");
+        detailsBtn.onclick = function(){
+            $('#detailsModal').modal('show');
+        };
+
+        loadProcesses(numberOfProcesses, processEntries, duration, delay);
+    }
+    
+    
+    function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
+        
+        var i = 0;
+        var num;
+
+        var topVal = 10;
+        var topDif = 15;
+        var topFinal = 0;
+
+        var maxProcessCount = 0;
+        processEntries.forEach(function (item) {
+
+            var counter = 0;
+            var timeRemaining = item[1];
+            var hiddenProcessCount=0;
+            topFinal = topVal + (topDif * i);
+            while(timeRemaining > 0) {
+                if(counter == 0 ) {
+                    //adding main process
+                    var html = "<div style=\"top: "+ topFinal +"%;\" id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + timeRemaining + "ms</div> </div>";
+                    $("#anim").append(html);
+                } else {
+                    //adding hidden process(es)
+                    var html = "<div style=\"opacity: 0; top: "+ topFinal +"%;\" class=\""+ item[0] +"-hidden process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + timeRemaining + "ms</div> </div>";
+                    $("#anim").append(html);
+                    hiddenProcessCount++
+                }
+                timeRemaining = timeRemaining - quantum;
+                counter ++;
+
+                if(hiddenProcessCount>maxProcessCount) {
+                    maxProcessCount = hiddenProcessCount;
+                }
+            }
+
+            i = i + 1;
+        });
+
+        // console.log(maxProcessCount);
+
+        animateProcesses(processEntries, delay, duration);
+    }
+
+    function animateProcesses(processEntries, delay, duration) {
+        // var quantum = 2;
+
+        var i = 0;
+        var num;
+
+        var nextDelay = 0;
+        processEntries.forEach(function (item) {
+
+            var hiddenProcesses = document.getElementsByClassName(item[0] +"-hidden");
+
+            //process number
+            num = i + 1;
+
+            //fetching main process and adding animation
+            var process = document.getElementById(item[0]);
+            if(hiddenProcesses.length == 0) {
+                process.style.animation = "moveToProcessor-rr " + duration + "s linear forwards";
+            } else {
+                process.style.animation = "moveToProcessorToQueue-rr " + duration + "s linear forwards";
+            }
+            
+            if (i==0) {
+                process.style.animationDelay = delay + "s";
+
+            } else {
+                nextDelay = delay + duration * i;
+                process.style.animationDelay = nextDelay + "s";
+            }
+
+            //Animating the processor
+            var html = "<div id=\"processor" + num + "\" class=\"processor-rr\"></div>";
+            $("#anim").append(html);
+            
+            var processor = document.getElementById("processor"+num);
+
+            var processorDelay = (duration * 0.5) + (duration * i);
+            processor.style.animationDelay = processorDelay + "s";
+            
+            var count = Math.ceil(duration * 0.4);
+            processor.style.animationIterationCount = count + "";
+            processor.classList.add("animate__heartBeat");
+
+
+            i = i + 1;
+        });
+        var totalDelay = duration * num;
+        console.log(totalDelay);
+
+        i = 0;
+        processEntries.forEach(function(item) {
+
+            //process number
+            num = i + 1;
+
+            if (i==0) {
+                nextDelay = delay;
+                // console.log("hey");
+            } else {
+                nextDelay = delay + duration * i;
+            }
+
+            var hiddenProcesses = document.getElementsByClassName(item[0] +"-hidden");
+            
+            for(var j = 0; j < hiddenProcesses.length; j++) {
+
+                //Animating the processor
+                var html = "<div id=\"processor" + num + j + "\" class=\"processor-rr\"></div>";
+                $("#anim").append(html);
+                
+                var processor = document.getElementById("processor"+num+j);
+
+                var processorDelay = (duration * 0.5) + (duration * j) + (totalDelay * num);
+                processor.style.animationDelay = processorDelay + "s";
+                
+                var count = Math.ceil(duration * 0.4);
+                processor.style.animationIterationCount = count + "";
+                processor.classList.add("animate__heartBeat");
+
+                if(j==hiddenProcesses.length-1) {
+                    //last process...add code to terminate
+                    hiddenDelay = nextDelay + (totalDelay * (j+1));
+                appearDelay = totalDelay * (j+1) + i;
+                hiddenProcesses[j].style.animation = "appear-rr 0.5s linear " + appearDelay + "s forwards, moveToProcessor-rr " + duration + "s linear " + hiddenDelay + "s forwards";
+                    // hiddenProcesses[j].style.animationDelay = hiddenDelay + "s"
+                    break;
+                }
+
+                hiddenDelay = nextDelay + (totalDelay * (j+1));
+                appearDelay = totalDelay * (j+1) + i;
+                hiddenProcesses[j].style.animation = "appear-rr 0.5s linear " + appearDelay + "s forwards, moveToProcessorToQueue-rr " + duration + "s linear " + hiddenDelay + "s forwards";
+                // hiddenProcesses[j].style.animationDelay = hiddenDelay + "s"
+            }
+
+            i = i + 1;
+        });
+    }
+</script>    
+ 
