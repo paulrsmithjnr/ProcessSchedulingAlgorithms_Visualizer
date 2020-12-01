@@ -1,7 +1,7 @@
 <div id="mainContainer">
     <h3 class = "prior">ROUND ROBIN</h3>
     <div id="anim">
-        <div id="primaryProcessor" class="processor-rr">
+        <div id="primaryProcessorRR" class="processor-rr">
             <div id="tag">
                 PROCESSOR
             </div>
@@ -118,7 +118,7 @@
 
         var processEntries = Object.entries(processMap);
 
-        processEntries.sort((a,b) => a[1]-b[1])
+        // processEntries.sort((a,b) => a[1]-b[1])
 
         var detailsModalTitle = document.getElementById("detailsModalTitle");
         detailsModalTitle.innerHTML = "Round Robin - Details";
@@ -178,6 +178,8 @@
     
     
     function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
+
+        var quantum = 2;
         
         var i = 0;
         var num;
@@ -186,25 +188,43 @@
         var topDif = 15;
         var topFinal = 0;
 
+        var maxProcessCount = 0;
         processEntries.forEach(function (item) {
-            //adding process
-            var html = "<div id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + item[1] + "ms</div> </div>";
-            $("#anim").append(html);
 
-            //fetching and styling process
-            var process = document.getElementById(item[0]);
-
-            // adding top
+            var counter = 0;
+            var timeRemaining = item[1];
+            var hiddenProcessCount=0;
             topFinal = topVal + (topDif * i);
-            process.style.top = topFinal +"%";
+            while(timeRemaining > 0) {
+                if(counter == 0 ) {
+                    //adding main process
+                    var html = "<div style=\"top: "+ topFinal +"%;\" id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + timeRemaining + "ms</div> </div>";
+                    $("#anim").append(html);
+                } else {
+                    //adding hidden process(es)
+                    var html = "<div style=\"opacity: 0; top: "+ topFinal +"%;\" class=\""+ item[0] +"-hidden process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + timeRemaining + "ms</div> </div>";
+                    $("#anim").append(html);
+                    hiddenProcessCount++
+                }
+                timeRemaining = timeRemaining - quantum;
+                counter ++;
+
+                if(hiddenProcessCount>maxProcessCount) {
+                    maxProcessCount = hiddenProcessCount;
+                }
+            }
 
             i = i + 1;
         });
+
+        // console.log(maxProcessCount);
 
         animateProcesses(processEntries, delay, duration);
     }
 
     function animateProcesses(processEntries, delay, duration) {
+        // var quantum = 2;
+
         var i = 0;
         var num;
 
@@ -214,17 +234,16 @@
             //process number
             num = i + 1;
 
-
-            //fetching current process and adding animation
+            //fetching main process and adding animation
             var process = document.getElementById(item[0]);
             process.style.animation = "moveToProcessorToQueue-rr " + duration + "s linear forwards";
             if (i==0) {
                 process.style.animationDelay = delay + "s";
+
             } else {
                 nextDelay = delay + duration * i;
                 process.style.animationDelay = nextDelay + "s";
             }
-
 
             //Animating the processor
             var html = "<div id=\"processor" + num + "\" class=\"processor-rr\"></div>";
@@ -239,6 +258,56 @@
             processor.style.animationIterationCount = count + "";
             processor.classList.add("animate__heartBeat");
 
+
+            i = i + 1;
+        });
+        var totalDelay = duration * num;
+        console.log(totalDelay);
+
+        i = 0;
+        processEntries.forEach(function(item) {
+
+            //process number
+            num = i + 1;
+
+            if (i==0) {
+                nextDelay = delay;
+                // console.log("hey");
+            } else {
+                nextDelay = delay + duration * i;
+            }
+
+            var hiddenProcesses = document.getElementsByClassName(item[0] +"-hidden");
+            
+            for(var j = 0; j < hiddenProcesses.length; j++) {
+
+                //Animating the processor
+                var html = "<div id=\"processor" + num + j + "\" class=\"processor-rr\"></div>";
+                $("#anim").append(html);
+                
+                var processor = document.getElementById("processor"+num+j);
+
+                var processorDelay = (duration * 0.5) + (duration * j) + (totalDelay*num);
+                processor.style.animationDelay = processorDelay + "s";
+                
+                var count = Math.ceil(duration * 0.4);
+                processor.style.animationIterationCount = count + "";
+                processor.classList.add("animate__heartBeat");
+
+                if(j==hiddenProcesses.length-1) {
+                    //last process...add code to terminate
+                    hiddenDelay = nextDelay + (totalDelay * (j+1));
+                appearDelay = totalDelay * (j+1) + i;
+                hiddenProcesses[j].style.animation = "appear-rr 0.5s linear " + appearDelay + "s forwards, moveToProcessor-rr " + duration + "s linear " + hiddenDelay + "s forwards";
+                    // hiddenProcesses[j].style.animationDelay = hiddenDelay + "s"
+                    break;
+                }
+
+                hiddenDelay = nextDelay + (totalDelay * (j+1));
+                appearDelay = totalDelay * (j+1) + i;
+                hiddenProcesses[j].style.animation = "appear-rr 0.5s linear " + appearDelay + "s forwards, moveToProcessorToQueue-rr " + duration + "s linear " + hiddenDelay + "s forwards";
+                // hiddenProcesses[j].style.animationDelay = hiddenDelay + "s"
+            }
 
             i = i + 1;
         });

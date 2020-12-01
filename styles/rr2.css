@@ -15,10 +15,11 @@
     width: 100%;
 }
 
-#primaryProcessor {
+#primaryProcessorRR {
     z-index: 1;
     font-size: x-large;
     font-weight: bolder;
+    color: white;
 }
 
 .processor-rr {
@@ -253,5 +254,11 @@
         left: 25%;
         background-color: green;
         opacity: 0;
+    }
+}
+
+@keyframes appear-rr {
+    100% {
+        opacity: 1;
     }
 }
