@@ -8,6 +8,7 @@
             <div id="slot">
             </div>
         </div>
+        <p id="quantumRR">Quantum: </p>
         <div id="rrQueue"><b>QUEUE</b></div>
         <img id="leftArrow" src="../images/left.png" alt="left arrow">
         <div id="rejoinRR">Rejoin<br>Queue</div>
@@ -25,10 +26,18 @@
 <script>
     $('#rrModal').modal('show');
 
+    var quantum;
+
     var rrNumProcessesBtn = document.getElementById("rrNumProcessesBtn");
     rrNumProcessesBtn.onclick = function() {
         var numProcessesTxtBx = document.getElementById("rrNumProcesses");
         var numProcesses = parseInt(numProcessesTxtBx.value);
+
+        quantum = parseInt(document.getElementById("rrQuantum").value);
+
+        var p = document.getElementById("quantumRR");
+        p.innerHTML = p.innerHTML + " " + quantum;
+
 
         var rrModalForm = document.getElementById("rrModalForm");
         var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
@@ -178,8 +187,6 @@
     
     
     function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
-
-        var quantum = 2;
         
         var i = 0;
         var num;
@@ -287,7 +294,7 @@
                 
                 var processor = document.getElementById("processor"+num+j);
 
-                var processorDelay = (duration * 0.5) + (duration * j) + (totalDelay*num);
+                var processorDelay = (duration * 0.5) + (duration * j) + (totalDelay * num);
                 processor.style.animationDelay = processorDelay + "s";
                 
                 var count = Math.ceil(duration * 0.4);

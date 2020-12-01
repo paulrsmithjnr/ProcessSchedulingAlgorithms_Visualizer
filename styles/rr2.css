@@ -1,18 +1,10 @@
-.process-sjf {
-    border: 2px black solid;
-    border-radius: 100%;
-    height: 65px;
-    width: 65px;
-    left: 10%;
-    background-color: green;
-    z-index: 2;
-}
+#quantumRR {
+    position: absolute;
+    font-weight: bolder;
+    font-size: larger;
+    top: 3%;
+    left: 40%;
 
-.process-sjf div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
 }
 
 #primaryProcessorRR {
@@ -30,7 +22,7 @@
     background-color: purple;    
 }
 
-.processor-rr, .process-sjf {
+.processor-rr {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
