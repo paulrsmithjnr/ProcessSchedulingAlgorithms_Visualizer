@@ -29,14 +29,14 @@
         var numProcesses = parseInt(numProcessesTxtBx.value);
 
         var fcfsModalForm = document.getElementById("fcfsModalForm");
-        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var html = "<small>Enter burst the time(s) for the " + numProcesses + " process(es) below:</small>";
         var i;
         var num;
         for(i = 0; i < numProcesses; i++) {
             num = i + 1;
 
             html = html + "<div class=\"form-group\">" + 
-                            "<input class=\"form-control fcfsProcesses\" id=\"fcfsP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                            "<input class=\"form-control fcfsProcesses\" id=\"fcfsP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter burst time for P" + num + " (in ms)\">" +
                            "</div>";
         }
 
@@ -128,6 +128,7 @@
                         "<th scope=\"col\">Order</th>" +
                         "<th scope=\"col\">Process</th>" +
                         "<th scope=\"col\">Burst Time</th>" +
+                        "<th scope=\"col\">Arrival Time</th>" +
                         "<th scope=\"col\">Waiting Time</th>" +
                         "</tr>" +
                     "</thead>" +
@@ -138,16 +139,24 @@
         var order = 1;
         processEntries.forEach(function(item) {
 
+            var arrivalTime = order - 1;
+
             if(order==1) {
                 currentWaitTime = 0;
             } else {
-                currentWaitTime = currentWaitTime + processEntries[order-2][1]
+                var wait = 0;
+                for(var i = 0; i < order-1; i++) {
+                    wait = wait + processEntries[i][1];
+                }
+                currentWaitTime = wait - arrivalTime;
             }
 
+            var arrivalTime = order - 1;
             html = html + "<tr>" +
                             "<th scope=\"row\">" + order + "</th>" +
                             "<td>" + item[0] + "</td>" +
                             "<td>" + item[1] + "ms</td>" +
+                            "<td>" + arrivalTime + "ms</td>" +
                             "<td>" + currentWaitTime + "ms</td>" +
                            "</tr>";
             
@@ -157,6 +166,7 @@
         averageWaitTime = averageWaitTime/processEntries.length;
         html = html + "<tr>" +
                         "<th scope=\"row\"></th>" +
+                        "<td></td>" +
                         "<td></td>" +
                         "<td><strong>Average Wait Time</strong></td>" +
                         "<td><strong>" + averageWaitTime.toFixed(1) + "ms</strong></td>" +

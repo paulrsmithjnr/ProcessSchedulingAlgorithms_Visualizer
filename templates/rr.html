@@ -40,14 +40,14 @@
 
 
         var rrModalForm = document.getElementById("rrModalForm");
-        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var html = "<small>Enter the burst time(s) for the " + numProcesses + " process(es) below:</small>";
         var i;
         var num;
         for(i = 0; i < numProcesses; i++) {
             num = i + 1;
 
             html = html + "<div class=\"form-group\">" + 
-                            "<input class=\"form-control rrProcesses\" id=\"rrP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                            "<input class=\"form-control rrProcesses\" id=\"rrP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter burst time for P" + num + " (in ms)\">" +
                            "</div>";
         }
 
@@ -86,7 +86,7 @@
                                          "</div>" +
                                          "<div class=\"form-group\">" +
                                          "<label for=\"rrQuantum\">Quantum</label>" +
-                                         "<input class=\"form-control\" id=\"rrQuantum\" aria-describedby=\"rrQuantumHelp\" placeholder=\"Enter Quantum\">" +
+                                         "<input class=\"form-control\" id=\"rrQuantum\" aria-describedby=\"rrQuantumHelp\" placeholder=\"Enter quantum\">" +
                                          "</div>";
 
                 var rrModalFooter = document.getElementById("rrModalFooter");
@@ -143,7 +143,6 @@
                         "<th scope=\"col\">Order</th>" +
                         "<th scope=\"col\">Process</th>" +
                         "<th scope=\"col\">Burst Time</th>" +
-                        "<th scope=\"col\">Waiting Time</th>" +
                         "</tr>" +
                     "</thead>" +
                     "<tbody>";
@@ -163,7 +162,6 @@
                             "<th scope=\"row\">" + order + "</th>" +
                             "<td>" + item[0] + "</td>" +
                             "<td>" + item[1] + "ms</td>" +
-                            "<td>" + currentWaitTime + "ms</td>" +
                            "</tr>";
             
             averageWaitTime = averageWaitTime + currentWaitTime;
@@ -172,9 +170,8 @@
         averageWaitTime = averageWaitTime/processEntries.length;
         html = html + "<tr>" +
                         "<th scope=\"row\"></th>" +
-                        "<td></td>" +
-                        "<td><strong>Average Wait Time</strong></td>" +
-                        "<td><strong>" + averageWaitTime.toFixed(1) + "ms</strong></td>" +
+                        "<td><strong>Quantum</strong></td>" +
+                        "<td>"+ quantum +"ms</td>" +
                       "</tr>" +
                     "</tbody>" +
                   "</table>";
