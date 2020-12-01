@@ -127,6 +127,7 @@
     
     };
 
+    /************************PROCESSES INFORMATION RECEIVED FROM MODALS********************************/
     function getParameters(processMap, numberOfProcesses, duration, delay) {
 
         var processEntries = Object.entries(processMap);
@@ -136,6 +137,7 @@
         var detailsModalTitle = document.getElementById("detailsModalTitle");
         detailsModalTitle.innerHTML = "Round Robin - Details";
 
+        /**********************CREATES DETAILS TABLE*****************************/
         var detailsModalBody = document.getElementById("detailsModalBody");
         var html = "<table id=\"detailsTables\" class=\"table table-striped table-dark table-hover\">" +
                     "<thead>" +
@@ -186,7 +188,7 @@
         loadProcesses(numberOfProcesses, processEntries, duration, delay);
     }
     
-    
+    /********************************LOADS THE PROCESSES INTO THE QUEUE**************************************/    
     function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
         
         var i = 0;
@@ -230,6 +232,7 @@
         animateProcesses(processEntries, delay, duration);
     }
 
+    /***************************************ANIMATES THE PROCESSES LOAD AND THE PROCESSOR**************************************************/
     function animateProcesses(processEntries, delay, duration) {
         // var quantum = 2;
 
