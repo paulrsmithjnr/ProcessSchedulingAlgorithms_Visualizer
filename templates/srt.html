@@ -1,62 +1,247 @@
-
 <div id="mainContainer">
-    
-    <!-- <h3 class = "prior">Priority Scheduling</h3> -->
-    <h3 class = "prior">Shortest Remaining Time</h3>
-
+    <h3 class = "prior">SHORTEST REMAINING TIME</h3>
     <div id="anim">
-        
-        <div id="queue">
+        <div id="primaryProcessor" class="processor-srt">
             <div id="tag">
-                <b>Ready Queue</b>
-                
+                PROCESSOR
             </div>
-        <div id="processor">
-            <div id="tag">
-                <b>Processor</b>
+            <div id="slot">
             </div>
-            <div id="slot"></div>
-            
         </div>
-        
-        <script>
-            var i;
-            var num;
-    
-            var topVal = 10;
-            var topDif = 15;
-            var topFinal = 0;
-    
-            var duration = 5;
-    
-            var delay = 5;
-            var delayDif = 10;
-            var delayFinal = 0;
-            var burstTime = Math.floor((Math.random() * 7) + 1) //assigns a random number between 1 and 7
-    
-            for(i = 0; i < 4; i++) {
-    
-                num = i + 1;
-    
-    
-                //adding process
-                var html = "<div id=\"p" + num + "\" class=\"process\">P" + num + "</div>";
-                $("#anim").append(html);
-    
-                 
-                //fetching and styling process
-                var process = document.getElementById("p" + num);
-               
-                //change initial top value here
-                topFinal = topVal + (topDif * i);
-                process.style.top = topFinal +"%";
-                
-                process.style.animation = "moveToProcessor " + duration + "s linear forwards";
-    
-                //change initial delay value here
-                delayFinal = delay + (delayDif * i);
-                process.style.animationDelay = delayFinal + "s";
-            }
-        </script>    
+        <div id="srtQueue"><b>READY QUEUE</b></div>
+        <img id="leftArrow" src="../images/left.png" alt="left arrow">
+        <div id="rejoinSRT">Rejoin<br>Queue</div>
+        <div id="stateLegend">
+            <div class="legendItem"><div id="colourReady"></div>Ready</div>
+            <div class="legendItem"><div id="colourRunning"></div>Running</div>
+            <div class="legendItem"><div id="colourTerminated"></div>Terminated</div>
+        </div>
+        <button id="restartBtn" type="button" class="btn btn-danger">Restart</button>
+        <button id="newBtn" type="button" class="btn btn-success">New</button>
+        <button id="detailsBtn" type="button" class="btn btn-secondary">Details</button>
     </div>
+</div> 
 
+<script>
+    $('#srtModal').modal('show');
+
+    var srtNumProcessesBtn = document.getElementById("srtNumProcessesBtn");
+    srtNumProcessesBtn.onclick = function() {
+        var numProcessesTxtBx = document.getElementById("srtNumProcesses");
+        var numProcesses = parseInt(numProcessesTxtBx.value);
+
+        var srtModalForm = document.getElementById("srtModalForm");
+        var html = "<small>Enter the time(s) for the " + numProcesses + " process(es) below:</small>";
+        var i;
+        var num;
+        for(i = 0; i < numProcesses; i++) {
+            num = i + 1;
+
+            html = html + "<div class=\"form-group\">" + 
+                            "<input class=\"form-control srtProcesses\" id=\"srtP" + num + "\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter time for P" + num + " (in ms)\">" +
+                           "</div>";
+        }
+
+        html = html + "<div class=\"form-group\">" +
+                        "<label for=\"animationSpeedSRT\">Animation Speed</label>" +
+                        "<select class=\"form-control\" id=\"animationSpeedSRT\">" +
+                            "<option>Slow</option>" +
+                            "<option>Fast</option>" +
+                        "</select>" +
+                      "</div>";
+
+        srtModalForm.innerHTML = html;
+
+        var srtModalFooter = document.getElementById("srtModalFooter");
+        srtModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                   "<button id=\"srtProcessesInfoBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+    
+        
+        var srtProcessesInfoBtn = document.getElementById("srtProcessesInfoBtn");
+        srtProcessesInfoBtn.onclick = function() {
+
+            /*******************SETTING ONCLICK LISTENERS*********************/
+            var restartBtn = document.getElementById("restartBtn");
+            restartBtn.onclick = function() {
+                var srt = document.getElementById("srt");
+                srt.click();
+            };
+
+            var newBtn = document.getElementById("newBtn");
+            newBtn.onclick = function() {
+                var srtModalForm = document.getElementById("srtModalForm");
+                srtModalForm.innerHTML = "<div class=\"form-group\">" +
+                                            "<label for=\"numProcesses\">Number of processes</label>" +
+                                            "<input class=\"form-control\" id=\"srtNumProcesses\" aria-describedby=\"numProcessesHelp\" placeholder=\"Enter number of processes\">" +
+                                            "<small id=\"numProcessesHelp\" class=\"form-text text-muted\">Numbers between 1 - 5 work best.</small>" +
+                                         "</div>";
+
+                var srtModalFooter = document.getElementById("srtModalFooter");
+                srtModalFooter.innerHTML = "<button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>" +
+                                           "<button id=\"srtNumProcessesBtn\" type=\"button\" class=\"btn btn-primary\">Submit</button>";
+
+                $("main").load("../templates/srt.html");
+            };
+            /*******************SETTING ONCLICK LISTENERS*********************/
+
+
+            var srtProcessesTimeTxtBxs = document.getElementsByClassName("srtProcesses");
+            var animationSpeedRR = document.getElementById("animationSpeedRR");
+            var speed = animationSpeedRR.value;
+
+            var duration;
+            var delay;
+
+            if(speed.localeCompare("Slow") == 0) {
+                duration = 9;
+                delay = 3;
+            } else {
+                duration = 3;
+                delay = 1;
+            }
+
+            var processMap = new Object();
+            var num;
+            for(var i = 0; i < srtProcessesTimeTxtBxs.length; i++) {
+                num = i + 1;
+
+                processMap["P"+num] = parseInt(rrProcessesTimeTxtBxs[i].value);
+            }
+
+            getParameters(processMap, num, duration, delay);
+            $('#srtModal').modal('hide');
+        };
+    
+    };
+
+    function getParameters(processMap, numberOfProcesses, duration, delay) {
+
+        var processEntries = Object.entries(processMap);
+
+        processEntries.sort((a,b) => a[1]-b[1])
+
+        var detailsModalTitle = document.getElementById("detailsModalTitle");
+        detailsModalTitle.innerHTML = "Shortest Remaining Time - Details";
+
+        var detailsModalBody = document.getElementById("detailsModalBody");
+        var html = "<table id=\"detailsTables\" class=\"table table-striped table-dark table-hover\">" +
+                    "<thead>" +
+                        "<tr>" +
+                        "<th scope=\"col\">Order</th>" +
+                        "<th scope=\"col\">Process</th>" +
+                        "<th scope=\"col\">Burst Time</th>" +
+                        "<th scope=\"col\">Waiting Time</th>" +
+                        "</tr>" +
+                    "</thead>" +
+                    "<tbody>";
+
+        var averageWaitTime = 0;
+        var currentWaitTime = 0;
+        var order = 1;
+        processEntries.forEach(function(item) {
+
+            if(order==1) {
+                currentWaitTime = 0;
+            } else {
+                currentWaitTime = currentWaitTime + processEntries[order-2][1]
+            }
+
+            html = html + "<tr>" +
+                            "<th scope=\"row\">" + order + "</th>" +
+                            "<td>" + item[0] + "</td>" +
+                            "<td>" + item[1] + "ms</td>" +
+                            "<td>" + currentWaitTime + "ms</td>" +
+                           "</tr>";
+            
+            averageWaitTime = averageWaitTime + currentWaitTime;
+            order++;
+        });
+        averageWaitTime = averageWaitTime/processEntries.length;
+        html = html + "<tr>" +
+                        "<th scope=\"row\"></th>" +
+                        "<td></td>" +
+                        "<td><strong>Average Wait Time</strong></td>" +
+                        "<td><strong>" + averageWaitTime.toFixed(1) + "ms</strong></td>" +
+                      "</tr>" +
+                    "</tbody>" +
+                  "</table>";
+        
+        detailsModalBody.innerHTML = html;
+
+        var detailsBtn = document.getElementById("detailsBtn");
+        detailsBtn.onclick = function(){
+            $('#detailsModal').modal('show');
+        };
+
+        loadProcesses(numberOfProcesses, processEntries, duration, delay);
+    }
+    
+    
+    function loadProcesses(numberOfProcesses, processEntries, duration, delay) {
+        
+        var i = 0;
+        var num;
+
+        var topVal = 10;
+        var topDif = 15;
+        var topFinal = 0;
+
+        processEntries.forEach(function (item) {
+            //adding process
+            var html = "<div id=\"" + item[0] + "\" class=\"process-sjf\"><div><b>" + item[0] + "</b></div> <div id=\"burstTime\">" + item[1] + "ms</div> </div>";
+            $("#anim").append(html);
+
+            //fetching and styling process
+            var process = document.getElementById(item[0]);
+
+            // adding top
+            topFinal = topVal + (topDif * i);
+            process.style.top = topFinal +"%";
+
+            i = i + 1;
+        });
+
+        animateProcesses(processEntries, delay, duration);
+    }
+
+    function animateProcesses(processEntries, delay, duration) {
+        var i = 0;
+        var num;
+
+        var nextDelay = 0;
+        processEntries.forEach(function (item) {
+
+            //process number
+            num = i + 1;
+
+
+            //fetching current process and adding animation
+            var process = document.getElementById(item[0]);
+            process.style.animation = "moveToProcessorToQueue-srt " + duration + "s linear forwards";
+            if (i==0) {
+                process.style.animationDelay = delay + "s";
+            } else {
+                nextDelay = delay + duration * i;
+                process.style.animationDelay = nextDelay + "s";
+            }
+
+
+            //Animating the processor
+            var html = "<div id=\"processor" + num + "\" class=\"processor-srt\"></div>";
+            $("#anim").append(html);
+            
+            var processor = document.getElementById("processor"+num);
+
+            var processorDelay = (duration * 0.5) + (duration * i);
+            processor.style.animationDelay = processorDelay + "s";
+            
+            var count = Math.ceil(duration * 0.4);
+            processor.style.animationIterationCount = count + "";
+            processor.classList.add("animate__heartBeat");
+
+
+            i = i + 1;
+        });
+    }
+</script>    
+ 

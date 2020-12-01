@@ -1,80 +1,263 @@
 .prior{
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
     color: white;
-    animation: fadeInDown 3s;
+    text-align: center;
+    animation: fadeInDown 2s;
+    font-weight: bolder;
 }
-.process {
+.process-srt {
     border: 2px black solid;
     border-radius: 100%;
-    height: 50px;
-    width: 50px;
-    left: 3%;
-    background-color: lightpink;
-    
+    height: 65px;
+    width: 65px;
+    left: 10%;
+    background-color: green;
+    z-index: 2;
 }
 
+.process-srt div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
-#processor {
-    border: 4px black solid;
+#primaryProcessor {
+    z-index: 1;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+.processor-srt {
     height: 200px;
     width: 200px;
     top: 28%;
-    left: 75%;
-    /* margin-right: 15%;
-    float: right;*/
-    z-index: 2;
-    background-color: gray;  
-    animation: heartBeat 5s;  
-
-    animation-delay: 10s;
+    left: 65%;
+    background-color: blue;    
 }
 
-#queue {
-    border: 4px gray;
-    height: 400px;
-    overflow: hidden;
-    width: 100px;
-    top: 2%;
-    right: 65%;
-    /* margin-right: 15%;
-    float: right;*/
-    z-index: 2;
-    background-color: #d0d0ff;    
-}
-
-#processor, .process {
+.processor-srt, .process-srt {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     position: absolute;
 }
 
-/* @keyframes fadeout{
-    from{
-        capacity: 1;
-
-    }to{
-        capacity: 0;
-
-    }
-} */
-
-@keyframes moveToProcessor{
-
-
-    100% {
-        left:70%;
-        top: 50%
-    }
-
+.processor-srt #tag, .processor-srt #slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    
 }
-@keyframes shakeX{
-    from {
-        background-color: transparent;
+
+#processSlot {
+    background-color: black;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+}
+
+#restartBtn {
+    position: absolute;
+    top: 90%;
+    left: 40%;
+    width: 10%;
+}
+
+#newBtn {
+    position: absolute;
+    top: 90%;
+    left: 51%;
+    width: 10%;
+}
+
+#detailsBtn {
+    position: absolute;
+    top: 90%;
+    left: 88%;
+    width: 10%;
+}
+
+#srtQueue {
+    position: absolute;
+    background-color: gray;
+    width: 10%;
+    text-align: center;
+    height: 93%;
+    top: 3.5%;
+    left: 8.5%;
+}
+
+#leftArrow {
+    position: absolute;
+    height: auto;
+    width: 5%;
+    top: 85%;
+    left: 19%;
+}
+
+#rejoinSRT {
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    background-color: grey;
+    font-size: smaller;
+    color: white;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 81%;
+    left: 25%;
+}
+
+#stateLegend {
+    position: absolute;
+    border: 2px solid black;
+    border-radius: 5%;
+    top: 2%;
+    left: 85%;
+    padding: 1%;
+    width: 13%;
+}
+
+#stateLegend .legendItem {
+    display: flex;
+    align-items: center;
+}
+
+#colourReady, #colourRunning, #colourTerminated {
+    height: 15px;
+    width: 15px;
+    border: 1px solid black;
+    margin-right: 2%;
+}
+
+#colourReady {
+    background-color: green;
+}
+
+#colourRunning {
+    background-color: red;
+}
+
+#colourTerminated {
+    background-color: black;
+}
+
+#detailsTables {
+    text-align: center;
+}
+
+@keyframes moveToProcessor-srt {
+
+    10% {
+        left: 72%;
+        top: 55%;
     }
-    to{
-        background-color:orangered;
+    20% {
+        left: 72%;
+        top: 55%;
+    }
+    30% {
+        left: 72%;
+        top: 55%;
+    }
+    40% {
+        left: 72%;
+        top: 55%;
+    }
+    50% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    60% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    70% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    80% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    90% {
+        left: 72%;
+        top: 55%;
+        background-color: black;
+        opacity: 1;
+    }
+    100% {
+        left: 90%;
+        top: 55%;
+        background-color: black;
+        opacity: 0;
+    }
+}
+
+@keyframes moveToProcessorToQueue-srt {
+
+    10% {
+        left: 72%;
+        top: 55%;
+    }
+    20% {
+        left: 72%;
+        top: 55%;
+    }
+    30% {
+        left: 72%;
+        top: 55%;
+    }
+    40% {
+        left: 72%;
+        top: 55%;
+    }
+    50% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    60% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    70% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    80% {
+        left: 72%;
+        top: 55%;
+        background-color: red;
+    }
+    90% {
+        left: 72%;
+        top: 55%;
+        background-color: green;
+        opacity: 1;
+    }
+    95% {
+        top: 81%;
+        left: 25%;
+        background-color: green;
+        opacity: 1;
+    }
+    100% {
+        top: 81%;
+        left: 25%;
+        background-color: green;
+        opacity: 0;
     }
 }
