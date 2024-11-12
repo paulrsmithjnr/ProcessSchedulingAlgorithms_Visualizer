@@ -12,4 +12,4 @@ This is a interactive visualization tool that animates the different types of sc
 
 # HEROKU DEPLOYMENT
 The visualizer was deployed to the following link:  
-* https://algovisualizer-psa.herokuapp.com/
+* [https://algovisualizer-psa-7b3354596303.herokuapp.com/](https://algovisualizer-psa-7b3354596303.herokuapp.com/)
